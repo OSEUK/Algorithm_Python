@@ -15,3 +15,6 @@ input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
 import sys
 print = sys.stdout.write
 ```
+* set = 중복되지 않은 값 저장
+* enumerate = 인덱스와 값을 동시에 반환
+* print(*list) = 언패킹하여 출력
