@@ -14,7 +14,7 @@ if __name__ == "__main__":
             else:
                 continue
         
-        if is_prime:
+        if is_prime and i != 1:
             result.append(i)
     
     for r in result:
