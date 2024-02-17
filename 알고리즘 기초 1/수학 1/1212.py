@@ -10,7 +10,6 @@ def octToBin(octal):
     
     return binary
 
-
 if __name__ == "__main__":
     oct_num = input().strip()
 
