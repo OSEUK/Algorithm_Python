@@ -5,7 +5,7 @@ def sumOf123(n):
     if n in dic:
         return dic[n]
     
-    dic[n] = sumOf123(n-1) + sumOf123(n-2) + sumOf123(n-3)
+    dic[n] = (sumOf123(n-1) + sumOf123(n-2) + sumOf123(n-3))
     return dic[n]
 
 if __name__ == "__main__":
