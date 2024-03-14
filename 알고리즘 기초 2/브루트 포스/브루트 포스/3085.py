@@ -1,55 +1,66 @@
 # 백준 3085, 사탕 게임
+def count_max_candies(board):
+    max_candies = 0
+    n = len(board)
 
-def lSwap(x, col):
-    colors[x][col], colors[x+1][col] = colors[x+1][col], colors[x][col]
-def rSwap(y, row):  
-    colors[row][y], colors[row][y+1] = colors[row][y+1], colors[row][y]
-
-
-def check_max():
-    cnt = 0
-    max_cnt = 1
+    # 가로로 연속한 사탕들을 교환하며 최대 사탕 수 계산
     for i in range(n):
-        for j in range(1, n):
-            if colors[i][j] == colors[i][j-1]:
-                cnt += 1
-                if cnt > max_cnt:
-                    max_cnt = cnt
-            else:
-                cnt = 1
-        cnt = 0
+        for j in range(n - 1):
+            if board[i][j] != board[i][j + 1]:
+                # 교환
+                board[i][j], board[i][j + 1] = board[i][j + 1], board[i][j]
+                # 현재 보드에서 최대 사탕 수 계산
+                max_candies = max(max_candies, count_max_candies_in_board(board))
+                # 원래대로 돌려놓음
+                board[i][j], board[i][j + 1] = board[i][j + 1], board[i][j]
 
+    # 세로로 연속한 사탕들을 교환하며 최대 사탕 수 계산
+    for i in range(n - 1):
+        for j in range(n):
+            if board[i][j] != board[i + 1][j]:
+                # 교환
+                board[i][j], board[i + 1][j] = board[i + 1][j], board[i][j]
+                # 현재 보드에서 최대 사탕 수 계산
+                max_candies = max(max_candies, count_max_candies_in_board(board))
+                # 원래대로 돌려놓음
+                board[i][j], board[i + 1][j] = board[i + 1][j], board[i][j]
+
+    return max_candies
+
+def count_max_candies_in_board(board):
+    n = len(board)
+    max_candies = 0
+
+    # 가로로 연속한 사탕 수 계산
     for i in range(n):
+        count = 1
         for j in range(1, n):
-            if colors[j][i] == colors[j][i-1]:
-                cnt += 1
-                if cnt > max_cnt:
-                    max_cnt = cnt
+            if board[i][j] == board[i][j - 1]:
+                count += 1
             else:
-                cnt = 1
+                max_candies = max(max_candies, count)
+                count = 1
+        max_candies = max(max_candies, count)
+
+    # 세로로 연속한 사탕 수 계산
+    for j in range(n):
+        count = 1
+        for i in range(1, n):
+            if board[i][j] == board[i - 1][j]:
+                count += 1
+            else:
+                max_candies = max(max_candies, count)
+                count = 1
+        max_candies = max(max_candies, count)
+
+    return max_candies
+
+def main():
+    n = int(input())
+    board = [list(input()) for _ in range(n)]
     
-    return max_cnt
-    
-n = int(input())
+    result = count_max_candies(board)
+    print(result)
 
-colors = []
-
-for i in range(n):
-    colors.append(list(input().strip()))
-
-arr = colors
-result = 0
-
-for i in range(n-1):
-    for j in range(n-1):
-        lSwap(i, j)
-        if check_max() > result:
-            result = check_max()
-        lSwap(i, j)
-
-        rSwap(i, j)
-        if check_max() > result:
-            result = check_max()
-        rSwap(i, j)
-
-print(result)
+if __name__ == "__main__":
+    main()
