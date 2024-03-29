@@ -2,20 +2,15 @@
 # 이어서
 
 N = int(input())
-
 arr = list(map(int, input().split()))
-swap = -1
-for i in range(n-1,0,-1):
-    if arr[i-1] < arr[i]:
-        swap = i-1
-        break
-else:
-    print(-1)
-    sys.exit()
 
-for i in range(n-1,0,-1):
-    if arr[swap] < arr[i]:
-        arr[swap],arr[i] = arr[i],arr[swap]
-        arr = arr[:swap+1]+sorted(arr[swap+1:])
-        print(*arr)
-        break
+for i in range(N-1, 0, -1):
+    if arr[i-1] < arr[i]:
+        for j in range(N-1, 0, -1):
+            if arr[i-1] < arr[j]:
+                arr[i-1], arr[j] = arr[j], arr[i-1]
+                arr = arr[:i] + sorted(arr[i:])
+                print(*arr)
+                exit()
+
+print(-1)
