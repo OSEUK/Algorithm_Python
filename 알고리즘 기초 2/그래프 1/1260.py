@@ -13,23 +13,44 @@ def dfs(v, arr: list):
             dfs(node, arr)
 
 def bfs(v, arr: list):
-    q = deque()
-    q.append(v)
+    queue = deque([v])
+    visited[v] = True
+    
+    while queue:
+        v = queue.popleft()
+        arr.append(v)
 
-    while ()
+        for node in graph[v]:
+            if not visited[node]:
+                queue.append(node)
+                visited[node] = True
+                
     
     
     
 if __name__ == "__main__":
     N, M, V = map(int, input().split())
-    graph = [[] for _ in range(N)]
+    graph = [[] for _ in range(N+1)]
 
     dArr = []
     bArr = []
-    visited = [False] * N
+    visited = [False] * (N+1)
     for i in range(M):
         a, b = map(int, input().split())
         graph[a].append(b)
         graph[b].append(a)
+    
+    for i in graph:
+        i.sort()
+
+    dfs(V, dArr)
+    visited = [False] * (N + 1)
+    bfs(V, bArr)
+
+    print(*dArr)
+    print(*bArr)
+    
+
+    
     
     
