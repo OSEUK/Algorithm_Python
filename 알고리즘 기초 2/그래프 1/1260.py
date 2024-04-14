@@ -25,9 +25,6 @@ def bfs(v, arr: list):
                 queue.append(node)
                 visited[node] = True
                 
-    
-    
-    
 if __name__ == "__main__":
     N, M, V = map(int, input().split())
     graph = [[] for _ in range(N+1)]
