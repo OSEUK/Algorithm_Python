@@ -15,7 +15,11 @@ input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
 # 빠른 출력
 import sys
 print = sys.stdout.write
+
 ```
 * set = 중복되지 않은 값 저장
 * enumerate = 인덱스와 값을 동시에 반환
 * print(*list) = 언패킹하여 출력
+
+* 제출시 RecursionError 발생 시
+sys.setrecursionlimit(10 ** 5) 로 재귀 깊이 늘리기
