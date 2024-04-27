@@ -1,42 +1,40 @@
-# 백준 16964, DFS 스페셜 저지 ( GOLD III )
-
 import sys
-input = sys.stdin.readline
-sys.setrecursionlimit(10 ** 5)
 
-def dfs(x):
-    if visited[x] == True:
-        return
-    visited[x] = True
-    
-    for node in tree[x]:
-        if not visited[node]:
-            children[x].add(node)
-            parents[node].add(x)
-            dfs(node)
+N = int(sys.stdin.readline())
+graph=[[] for _ in range(N+1)]
+for _ in range(N-1):
+    a,b=map(int,sys.stdin.readline().split())
+    graph[a].append(b)
+    graph[b].append(a)
+ans= list(map(int,sys.stdin.readline().split()))
+level=[False]*(N+1)
+tsize = [0]*(N+1)
+visited = [False]*(N+1)
 
-if __name__ == "__main__":
-    N = int(input())
-
-    tree = [[] for _ in range(N+1)]
-    visited = [False] * (N+1)
-    children = [set() for _ in range(N+1)]
-    parents = [set() for _ in range(N+1)]
-
-    for _ in range(N-1):
-        a, b = map(int, input().split())
-        tree[a].append(b)
-        tree[b].append(a)
-
-    test_arr = list(map(int, input().split()))
-
-    if test_arr[0] != 1:
-        print(0)
-        exit()
-    
-    dfs(1)
-
-    
+def dfs(x,lv):
+    if visited[x]:
+        return 0
+    visited[x]=True
+    size=1
+    level[x]=lv
+    for i in range(len(graph[x])):
+        next =graph[x][i]
+        size+=dfs(next,lv+1)
+    tsize[x]=size
+    return size
 
 
-    
+if ans[0]!=1:
+    print("0")
+    sys.exit(0)
+else:
+    dfs(1,0)
+    for i in range(1,N):
+        x=ans[i]
+        if tsize[x] == 1 or i + tsize[x] >=N:
+            continue
+        next = ans[i+tsize[x]]
+        if level[next]>level[x]:
+            print(0)
+            sys.exit(0)
+    print(1)
